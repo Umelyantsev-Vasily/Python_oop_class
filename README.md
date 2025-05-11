@@ -2,7 +2,6 @@
 
 ![Python](https://img.shields.io/badge/python-3.13+-blue.svg)
 ![Poetry](https://img.shields.io/badge/packaging-poetry-cyan.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)
 ![Type Checked](https://img.shields.io/badge/types-mypy-blue.svg)
 ![Tests](https://img.shields.io/badge/tests-pytest-blue.svg)
