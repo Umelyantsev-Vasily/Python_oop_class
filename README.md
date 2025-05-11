@@ -64,14 +64,14 @@ Name                         Stmts   Miss  Cover
 ------------------------------------------------
 src\__init__.py                  0      0   100%
 src\create_class.py             19      0   100%
+src\main.py                     37     37     0%
 src\read_json.py                14      0   100%
 tests\__init__.py                0      0   100%
-tests\conftest.py               17      3    82%
-tests\test_creete_class.py      18      0   100%
+tests\conftest.py                8      0   100%
+tests\test_creete_class.py      32      0   100%
 tests\test_read_json.py         45      0   100%
 ------------------------------------------------
-TOTAL                          113      3    97%
-
+TOTAL                          155     37    76%
 ```
 ---
 ## 📝 Лицензия
