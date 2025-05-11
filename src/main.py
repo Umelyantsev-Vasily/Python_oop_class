@@ -2,7 +2,7 @@ from src.create_class import Category, Product
 
 # def main():
 #     # Загрузка данных
-#     categories = load_categories_from_json(FAIL_PACH)
+#     categories = load_categories_from_json(FAIL_PATH)
 #
 #     # Вывод результатов
 #     print("=" * 50)

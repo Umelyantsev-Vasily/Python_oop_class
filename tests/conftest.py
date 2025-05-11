@@ -19,7 +19,7 @@ def sample_category(sample_products):
 
 
 @pytest.fixture(autouse=True)
-def reset_counters() :
+def reset_counters():
     """Сбрасываем счётчики перед каждым тестом"""
     Category.counting_categories = 0
     Category.total_unique_products = 0
