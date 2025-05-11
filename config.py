@@ -1,1 +1,1 @@
-FAIL_PACH="../data/products.json"
+FAIL_PACH = "../data/products.json"

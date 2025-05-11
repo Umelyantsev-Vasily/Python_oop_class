@@ -1,5 +1,3 @@
-from src.read_json import load_categories_from_json
-from config import FAIL_PACH
 from src.create_class import Category, Product
 
 # def main():
@@ -48,7 +46,7 @@ if __name__ == "__main__":
     category1 = Category(
         "Смартфоны",
         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
-        [product1, product2, product3]
+        [product1, product2, product3],
     )
 
     print("\n=== Проверка категории смартфонов ===")
@@ -59,11 +57,11 @@ if __name__ == "__main__":
     print(f"Уникальных продуктов всего: {category1.total_unique_products}\n")
 
     # Создание и проверка категории телевизоров
-    product4 = Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7)
+    product4 = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
     category2 = Category(
         "Телевизоры",
         "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником",
-        [product4]
+        [product4],
     )
 
     print("\n=== Проверка категории телевизоров ===")

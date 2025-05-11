@@ -1,3 +1,5 @@
+from typing import Set
+
 class Product:
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
         self.name = name
@@ -7,9 +9,9 @@ class Product:
 
 
 class Category:
-    counting_categories = 0  # подсчёт категорий
-    total_unique_products = 0  # подсчёт УНИКАЛЬНЫХ товаров
-    all_products = set()  # для хранения уникальных товаров
+    counting_categories: int = 0  # подсчёт категорий
+    total_unique_products: int = 0  # подсчёт УНИКАЛЬНЫХ товаров
+    all_products: Set[Product] = set()  # для хранения уникальных товаров
 
     def __init__(self, name: str, description: str, products: list[Product] = None):
         self.name = name
