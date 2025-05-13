@@ -1,7 +1,6 @@
 import pytest
 
-from src.create_class import Category, Product
-
+from src.create_class import Category
 
 # @pytest.fixture
 # def sample_product():

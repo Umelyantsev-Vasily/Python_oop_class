@@ -53,8 +53,8 @@ if __name__ == "__main__":
     print(f"Название категории 'Смартфоны'? {category1.name == 'Смартфоны'}")
     print(f"Описание категории: {category1.description}")
     print(f"Количество продуктов в категории: {len(category1.products)}")
-    print(f"Всего категорий (после создания этой): {category1.counting_categories}")
-    print(f"Уникальных продуктов всего: {category1.total_unique_products}\n")
+    print(f"Всего категорий (после создания этой): {Category.counting_categories}")
+    print(f"Уникальных продуктов всего: {Category.total_unique_products}\n")
 
     # Создание и проверка категории телевизоров
     product4 = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)

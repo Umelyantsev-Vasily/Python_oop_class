@@ -63,15 +63,16 @@ python-oop-klass/
 Name                         Stmts   Miss  Cover
 ------------------------------------------------
 src\__init__.py                  0      0   100%
-src\create_class.py             19      0   100%
+src\create_class.py             42      3    93%
 src\main.py                     37     37     0%
 src\read_json.py                14      0   100%
 tests\__init__.py                0      0   100%
 tests\conftest.py                8      0   100%
-tests\test_creete_class.py      32      0   100%
-tests\test_read_json.py         45      0   100%
+tests\test_creete_class.py      64      0   100%
+tests\test_read_json.py         43      0   100%
 ------------------------------------------------
-TOTAL                          155     37    76%
+TOTAL                          208     40    81%
+                         155     37    76%
 ```
 ---
 ## 📝 Лицензия
