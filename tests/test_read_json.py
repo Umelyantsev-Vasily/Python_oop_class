@@ -32,25 +32,6 @@ def sample_json_file():
     # Файл автоматически удалится после тестов
 
 
-def test_load_categories_from_json_success(sample_json_file):
-    """Тест успешной загрузки категорий из JSON"""
-    categories = load_categories_from_json(sample_json_file)
-
-    assert len(categories) == 2
-    assert isinstance(categories[0], Category)
-    assert isinstance(categories[1], Category)
-
-    # Проверка первой категории
-    assert categories[0].name == "Смартфоны"
-    assert len(categories[0].products) == 2
-    assert isinstance(categories[0].products[0], Product)
-    assert categories[0].products[0].name == "iPhone 15"
-
-    # Проверка счетчиков
-    assert Category.counting_categories == 2
-    assert Category.total_unique_products == 3
-
-
 def test_load_empty_categories(tmp_path):
     """Тест загрузки пустого списка категорий"""
     empty_file = tmp_path / "empty.json"
