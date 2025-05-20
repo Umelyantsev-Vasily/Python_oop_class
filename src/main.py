@@ -67,3 +67,29 @@ if __name__ == "__main__":
     print("Цена после попытки установки -100:", new_product.price)
     new_product.price = 0
     print("Цена после попытки установки 0:", new_product.price)
+
+    # Новые демонстрации функциональности
+    print("\n--- НОВАЯ ФУНКЦИОНАЛЬНОСТЬ ---")
+    print("\nСложение двух продуктов (общая стоимость):")
+    total_cost = product1 + product2
+    print(f"Общая стоимость {product1.name} и {product2.name}: {total_cost} руб.")
+
+    print("\nОбщая стоимость одного продукта:")
+    print(
+        f"{product3.name}: {product3.total_cost()} руб. (цена {product3.price} руб. × количество {product3.quantity} шт.)"
+    )
+
+    print("\nСложение стоимости нескольких продуктов:")
+    total_all = product1.total_cost() + product2.total_cost() + product3.total_cost() + product4.total_cost()
+    print(f"Общая стоимость всех продуктов в категории: {total_all} руб.")
+
+    print("\nПопытка сложения продукта с не-продуктом:")
+    try:
+        invalid_sum = product1 + "строка"
+    except TypeError as e:
+        print(f"Ошибка: {e}")
+
+    print("\nСтатистика по категориям и продуктам:")
+    print(f"Всего категорий: {Category.counting_categories}")
+    print(f"Уникальных продуктов: {Category.total_unique_products}")
+    print(f"Общее количество товаров в категории '{category1.name}': {len(category1)} шт.")

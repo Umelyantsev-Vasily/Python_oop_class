@@ -3,7 +3,7 @@ from tempfile import NamedTemporaryFile
 
 import pytest
 
-from src.read_json import Category, Product, load_categories_from_json
+from src.read_json import Category, load_categories_from_json
 
 
 @pytest.fixture
