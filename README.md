@@ -113,7 +113,6 @@ Name                             Stmts   Miss  Cover
 src\__init__.py                      0      0   100%
 src\create_class.py                 59      4    93%
 src\lawngrass_class.py               9      0   100%
-src\main.py                         56     56     0%
 src\read_json.py                    14      0   100%
 src\smartphone_class.py             18      0   100%
 tests\__init__.py                    0      0   100%
@@ -123,7 +122,8 @@ tests\test_lawngrass.py             30      0   100%
 tests\test_read_json.py             32      0   100%
 tests\test_smartphone_class.py      33      0   100%
 ----------------------------------------------------
-TOTAL                              380     63    83%
+TOTAL                              324      7    98%
+
 ```
 ---
 ## 📝 Лицензия
