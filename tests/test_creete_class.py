@@ -107,12 +107,12 @@ class TestCategoryProducts(unittest.TestCase):
         self.assertIn(p, Category.all_products)
 
     def test_add_invalid_product(self):
-        c = Category("Планшеты", "Мобильные компьютеры")
+        c = Category("Планшеты", "Мобильные компьютеры ")
         with self.assertRaises(TypeError):
             c.add_product("not a product")
 
     def test_add_zero_quantity_product(self):
-        c = Category("Аксессуары", "Чехлы и защитные стекла")
+        c = Category("Аксессуары", "Чехлы и защитные стекла ")
         p_zero = Product("Чехол для iPhone", "Силиконовый, черный", 990.0, 0)
         c.add_product(p_zero)
         self.assertEqual(len(c), 0)  # Продукт не должен добавиться
@@ -140,7 +140,7 @@ class TestCategoryCounters(unittest.TestCase):
 
 
 def test_add_smartphones():
-    """Сложение двух смартфонов (успешно)."""
+    """Сложение двух смартфонов (успешно)"""
     phone1 = Smartphone("iPhone", "Флагман", 1000, 2, "High", "15", "256GB", "Black")
     phone2 = Smartphone("Samsung", "Флагман", 900, 3, "High", "S23", "512GB", "White")
     total = phone1 + phone2

@@ -5,7 +5,7 @@ from src.smartphone_class import Smartphone
 
 
 def test_smartphone_initialization(sample_smartphone):
-    """Тест корректности инициализации смартфона"""
+    """Тест корректности инициализации смартфона """
     assert sample_smartphone.name == "iPhone 15"
     assert sample_smartphone.description == "Флагман"
     assert sample_smartphone.price == 999.99
@@ -17,18 +17,18 @@ def test_smartphone_initialization(sample_smartphone):
 
 
 def test_smartphone_str_representation(sample_smartphone):
-    """Тест строкового представления смартфона"""
+    """Тест строкового представления смартфона """
     expected_str = "iPhone 15, 15 Pro, Black, 999.99 руб. Остаток: 5 шт."
     assert str(sample_smartphone) == expected_str
 
 
 def test_smartphone_inheritance():
-    """Тест наследования от класса Product"""
+    """Тест наследования от класса Product """
     assert issubclass(Smartphone, Product)
 
 
 def test_smartphone_addition(sample_smartphone):
-    """Тест сложения двух смартфонов"""
+    """Тест сложения двух смартфонов """
     smartphone2 = Smartphone(
         name="Samsung Galaxy",
         description="Андроид флагман",
