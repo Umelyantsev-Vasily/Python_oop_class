@@ -159,5 +159,5 @@ def test_add_different_classes():
     """Попытка сложить смартфон и траву (ошибка TypeError)."""
     phone = Smartphone("iPhone", "Флагман", 1000, 2, "High", "15", "256GB", "Black")
     grass = LawnGrass("Трава", "Мягкая", 20, 50, "Россия", "2 недели", "Зеленый")
-    with pytest.raises(TypeError, match="Нельзя складывать товары разных классов"):
+    with pytest.raises(TypeError, match="Можно складывать только объекты класса Product или его наследников"):
         total = phone + grass
