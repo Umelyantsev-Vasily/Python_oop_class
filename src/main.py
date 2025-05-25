@@ -1,38 +1,23 @@
 from src.create_class import Category, Product
-
-# def main():
-#     # Загрузка данных
-#     categories = load_categories_from_json(FAIL_PATH)
-#
-#     # Вывод результатов
-#     print("=" * 50)
-#     print("Загруженные категории:")
-#     for category in categories:
-#         print(f"\n{category}:")
-#         for product in category.products:
-#             print(f"  - {product}")
-#
-#     print("\n" + "=" * 50)
-#     print(f"Всего категорий: {Category.counting_categories}")
-#     print(f"Всего уникальных товаров: {Category.total_unique_products}")
-#
-#
-# if __name__ == "__main__":
-#     main()
-
+from src.lawngrass_class import LawnGrass
+from src.smartphone_class import Smartphone
 
 if __name__ == "__main__":
+    # Создание обычных продуктов
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
     product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
 
+    # Создание категории
     category1 = Category(
         "Смартфоны",
         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
         [product1, product2, product3],
     )
 
-    print("Список продуктов после создания категории:")
+    # Демонстрация базового функционала
+    print("=== БАЗОВЫЙ ФУНКЦИОНАЛ ===")
+    print("\nСписок продуктов после создания категории:")
     print(category1.products)
 
     product4 = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
@@ -41,55 +26,70 @@ if __name__ == "__main__":
     print("\nСписок продуктов после добавления нового продукта:")
     print(category1.products)
 
-    print("\nКоличество продуктов в категории:", category1.product_count)
-
+    # Создание продукта через new_product
     new_product = Product.new_product(
         {
-            "name": "Samsung Galaxy S23 Ultra",
-            "description": "256GB, Серый цвет, 200MP камера",
-            "price": 180000.0,
-            "quantity": 5,
+            "name": "Samsung Galaxy S24",
+            "description": "512GB, Черный, 250MP камера",
+            "price": 220000.0,
+            "quantity": 3,
         }
     )
 
-    print("\nИнформация о новом продукте:")
-    print("Название:", new_product.name)
-    print("Описание:", new_product.description)
-    print("Цена:", new_product.price)
-    print("Количество:", new_product.quantity)
-
-    print("\nИзменение цены продукта:")
+    # Демонстрация работы с ценами
+    print("\nРабота с ценами:")
     new_product.price = 800
     print("Новая цена (800):", new_product.price)
 
-    print("\nПопытка установки недопустимых цен:")
-    new_product.price = -100
-    print("Цена после попытки установки -100:", new_product.price)
-    new_product.price = 0
-    print("Цена после попытки установки 0:", new_product.price)
-
-    # Новые демонстрации функциональности
-    print("\n--- НОВАЯ ФУНКЦИОНАЛЬНОСТЬ ---")
-    print("\nСложение двух продуктов (общая стоимость):")
-    total_cost = product1 + product2
-    print(f"Общая стоимость {product1.name} и {product2.name}: {total_cost} руб.")
-
-    print("\nОбщая стоимость одного продукта:")
-    print(
-        f"{product3.name}: {product3.total_cost()} руб. (цена {product3.price} руб. × количество {product3.quantity} шт.)"
-    )
-
-    print("\nСложение стоимости нескольких продуктов:")
-    total_all = product1.total_cost() + product2.total_cost() + product3.total_cost() + product4.total_cost()
-    print(f"Общая стоимость всех продуктов в категории: {total_all} руб.")
-
-    print("\nПопытка сложения продукта с не-продуктом:")
     try:
-        invalid_sum = product1 + "строка"
-    except TypeError as e:
-        print(f"Ошибка: {e}")
+        new_product.price = -100
+    except ValueError as e:
+        print(f"Ошибка при установке цены -100: {e}")
 
-    print("\nСтатистика по категориям и продуктам:")
+    try:
+        new_product.price = 0
+    except ValueError as e:
+        print(f"Ошибка при установке цены 0: {e}")
+
+    # НОВАЯ ФУНКЦИОНАЛЬНОСТЬ
+    print("\n=== НОВАЯ ФУНКЦИОНАЛЬНОСТЬ ===")
+
+    # 1. Создание и работа с классами-наследниками
+    smartphone = Smartphone("iPhone 15 Pro", "Флагман Apple", 150000, 10, "A17 Pro", "15 Pro", "1TB", "Titanium")
+
+    lawn_grass = LawnGrass("Газонная трава Premium", "Мягкое покрытие", 2500, 100, "Италия", "14 дней", "Изумрудный")
+
+    print("\nСпециализированные продукты:")
+    print(smartphone)
+    print(lawn_grass)
+
+    # 2. Демонстрация сложения продуктов
+    print("\nСложение продуктов:")
+    try:
+        total = smartphone + lawn_grass
+        print(f"Общая стоимость: {total} руб.")
+    except TypeError as e:
+        print(f"Ошибка сложения разных классов: {e}")
+
+    # 3. Добавление специализированных продуктов в категорию
+    print("\nДобавление специализированных продуктов в категорию:")
+    try:
+        category1.add_product(smartphone)
+        category1.add_product(lawn_grass)
+        print("Продукты успешно добавлены!")
+    except TypeError as e:
+        print(f"Ошибка добавления: {e}")
+
+    # 4. Статистика
+    print("\nСтатистика:")
     print(f"Всего категорий: {Category.counting_categories}")
     print(f"Уникальных продуктов: {Category.total_unique_products}")
     print(f"Общее количество товаров в категории '{category1.name}': {len(category1)} шт.")
+    print(f"Общая стоимость всех товаров: {sum(p.price * p.quantity for p in category1._Category__products)} руб.")
+
+    # 5. Демонстрация защиты от добавления не-продуктов
+    print("\nПопытка добавить не-продукт:")
+    try:
+        category1.add_product("Это не продукт")
+    except TypeError as e:
+        print(f"Ошибка: {e}")
