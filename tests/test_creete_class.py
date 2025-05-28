@@ -3,6 +3,8 @@ import unittest
 import pytest
 
 from src.create_class import Category, Product
+from src.lawngrass_class import LawnGrass
+from src.smartphone_class import Smartphone
 
 
 class TestProductAddition:
@@ -105,12 +107,12 @@ class TestCategoryProducts(unittest.TestCase):
         self.assertIn(p, Category.all_products)
 
     def test_add_invalid_product(self):
-        c = Category("Планшеты", "Мобильные компьютеры")
+        c = Category("Планшеты", "Мобильные компьютеры ")
         with self.assertRaises(TypeError):
             c.add_product("not a product")
 
     def test_add_zero_quantity_product(self):
-        c = Category("Аксессуары", "Чехлы и защитные стекла")
+        c = Category("Аксессуары", "Чехлы и защитные стекла ")
         p_zero = Product("Чехол для iPhone", "Силиконовый, черный", 990.0, 0)
         c.add_product(p_zero)
         self.assertEqual(len(c), 0)  # Продукт не должен добавиться
@@ -131,7 +133,31 @@ class TestCategoryCounters(unittest.TestCase):
 
         p1 = Product("iPhone 14 Pro", "256GB, золотой", 99990.0, 5)
         p2 = Product("Samsung Z Flip5", "512GB, фиолетовый", 109990.0, 3)
-        c = Category("Флагманы", "Топовые модели", [p1, p2])
+        title = Category("Флагманы", "Топовые модели", [p1, p2])
 
         self.assertEqual(Category.counting_categories, initial_categories + 1)
         self.assertEqual(Category.total_unique_products, initial_products + 2)
+
+
+def test_add_smartphones():
+    """Сложение двух смартфонов (успешно)"""
+    phone1 = Smartphone("iPhone", "Флагман", 1000, 2, "High", "15", "256GB", "Black")
+    phone2 = Smartphone("Samsung", "Флагман", 900, 3, "High", "S23", "512GB", "White")
+    total = phone1 + phone2
+    assert total == (1000 * 2) + (900 * 3)  # 2000 + 2700 = 4700
+
+
+def test_add_lawn_grasses():
+    """Сложение двух видов травы (успешно)."""
+    grass1 = LawnGrass("Трава", "Мягкая", 20, 50, "Россия", "2 недели", "Зеленый")
+    grass2 = LawnGrass("Трава Premium", "Мягкая", 30, 40, "Германия", "3 недели", "Зеленый")
+    total = grass1 + grass2
+    assert total == (20 * 50) + (30 * 40)  # 1000 + 1200 = 2200
+
+
+def test_add_different_classes():
+    """Попытка сложить смартфон и траву (ошибка TypeError)."""
+    phone = Smartphone("iPhone", "Флагман", 1000, 2, "High", "15", "256GB", "Black")
+    grass = LawnGrass("Трава", "Мягкая", 20, 50, "Россия", "2 недели", "Зеленый")
+    with pytest.raises(TypeError, match="Можно складывать только объекты класса Product или его наследников"):
+        total = phone + grass
