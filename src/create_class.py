@@ -1,11 +1,18 @@
-from typing import List, Set
+from typing import Dict, List, Set
+
+from src.base_product import BaseProduct
+from src.creationloggermixin import CreationLoggerMixin
 
 
-class Product:
-    """Класс, представляющий товар в магазине."""
+class Product(CreationLoggerMixin, BaseProduct):
+    """Класс товара с логированием создания объектов"""
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
-        """Инициализирует новый товар."""
+        """Инициализация товара с логированием"""
+        # Вызов __init__ миксина для логирования
+        super().__init__(name=name, description=description, price=price, quantity=quantity)
+
+        # Инициализация атрибутов
         self.name = name
         self.description = description
         self.__price = price
@@ -13,42 +20,87 @@ class Product:
 
     @property
     def price(self) -> float:
-        """Возвращает цену товара."""
+        """Возвращает цену товара"""
         return self.__price
 
     @price.setter
-    def price(self, new_price: float) -> None:
-        """Устанавливает новую цену товара."""
-        if new_price <= 0:
-            print("Цена не должна быть нулевая или отрицательная")
-        else:
-            self.__price = new_price
+    def price(self, value: float) -> None:
+        """Устанавливает новую цену товара"""
+        if value <= 0:
+            raise ValueError("Цена должна быть положительной")
+        self.__price = value
 
     @classmethod
-    def new_product(cls, product_data: dict) -> "Product":
-        """Создает новый товар из словаря."""
+    def new_product(cls, product_data: Dict[str, object]) -> "Product":
+        """Создает новый товар из словаря"""
         return cls(
-            name=product_data["name"],
-            description=product_data["description"],
-            price=product_data["price"],
-            quantity=product_data["quantity"],
+            name=str(product_data["name"]),
+            description=str(product_data["description"]),
+            price=float(product_data["price"]),
+            quantity=int(product_data["quantity"]),
         )
 
     def __str__(self) -> str:
-        """Возвращает строковое представление товара."""
+        """Строковое представление товара"""
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other:"Product") -> float:
-        """Складывает два продукта, возвращая их общую стоимость."""
-        if type(other) not in (type(self), Product):  # Явная проверка через type()
-            raise TypeError("Можно складывать только объекты класса Product или его наследников")
-        if type(self) != type(other):  # Проверка на одинаковые классы
-            raise TypeError("Нельзя складывать товары разных классов")
-        return self.price * self.quantity + other.price * other.quantity
-
     def total_cost(self) -> float:
-        """Возвращает общую стоимость товара (цена * количество)."""
+        """Возвращает общую стоимость товара (цена * количество)"""
         return self.price * self.quantity
+
+    def __add__(self, other: "Product") -> float:
+        """Сложение товаров по общей стоимости"""
+        if not isinstance(other, Product):
+            raise TypeError("Можно складывать только объекты класса Product или его наследников")
+        if type(self) != type(other):
+            raise TypeError("Можно складывать только объекты класса Product или его наследников")
+        return self.total_cost() + other.total_cost()
+
+
+class Smartphone(Product):
+    """Класс для представления смартфона"""
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency: str,
+        model: str,
+        memory: int,
+        color: str,
+    ):
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+    def __add__(self, other: "Smartphone") -> float:
+        return super().__add__(other)
+
+
+class LawnGrass(Product):
+    """Класс для представления газонной травы"""
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period: int,
+        color: str,
+    ):
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
+    def __add__(self, other: "LawnGrass") -> float:
+        return super().__add__(other)
 
 
 class Category:
@@ -79,14 +131,20 @@ class Category:
             print("Товар с нулевым количеством не может быть добавлен")
             return
 
-        self.__products.append(product)
-        Category.total_unique_products += 1
-        Category.all_products.add(product)
+        if product not in self.__products:
+            self.__products.append(product)
+            Category.total_unique_products += 1
+            Category.all_products.add(product)
 
     @property
     def products(self) -> str:
         """Возвращает список товаров в виде строк."""
         return "\n".join(str(product) for product in self.__products)
+
+    @property
+    def products_list(self) -> List[Product]:
+        """Возвращает список товаров (для внутреннего использования)."""
+        return self.__products
 
     @property
     def product_count(self) -> int:
