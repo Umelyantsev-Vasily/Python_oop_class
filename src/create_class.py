@@ -174,4 +174,3 @@ class Category:
             return total_price / len(self.__products)
         except ZeroDivisionError:
             return 0.0
-
