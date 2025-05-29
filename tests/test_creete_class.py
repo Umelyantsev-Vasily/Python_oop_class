@@ -110,10 +110,15 @@ class TestCategoryProducts(unittest.TestCase):
             c.add_product("not a product")
 
     def test_add_zero_quantity_product(self):
-        c = Category("Аксессуары", "Чехлы и защитные стекла ")
-        p_zero = Product("Чехол для iPhone", "Силиконовый, черный", 990.0, 0)
-        c.add_product(p_zero)
-        self.assertEqual(len(c), 0)  # Продукт не должен добавиться
+        """Тест попытки добавления товара с нулевым количеством"""
+        c = Category("Аксессуары", "Чехлы и защитные стекла")
+
+        # Проверяем, что создание товара с quantity=0 вызывает ValueError
+        with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+            Product("Чехол для iPhone", "Силиконовый, черный", 990.0, 0)
+
+        # Проверяем, что категория осталась пустой
+        assert len(c.products_list) == 0
 
 
 class TestCategoryCounters(unittest.TestCase):
@@ -159,3 +164,64 @@ def test_add_different_classes():
     grass = LawnGrass("Трава", "Мягкая", 20, 50, "Россия", "2 недели", "Зеленый")
     with pytest.raises(TypeError, match="Можно складывать только объекты класса Product или его наследников"):
         total = phone + grass
+
+
+# ////////////////////////////////////////////////////
+
+
+def test_product_creation():
+    """Тест создания товара"""
+    product = Product("Телефон", "Смартфон", 10000, 5)
+    assert product.name == "Телефон"
+    assert product.price == 10000
+    assert product.quantity == 5
+
+
+def test_product_zero_quantity():
+    """Тест создания товара с нулевым количеством (должно вызывать ValueError)"""
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Телефон", "Смартфон", 10000, 0)
+
+
+def test_category_average_price():
+    """Тест расчета средней цены товаров в категории"""
+    # Создаем категорию с товарами
+    category = Category("Электроника", "Техника")
+    category.add_product(Product("Телефон", "Смартфон", 10000, 5))
+    category.add_product(Product("Ноутбук", "Игровой", 50000, 3))
+
+    # Проверяем среднюю цену (10000 + 50000) / 2 = 30000
+    assert category.average_price() == 30000.0
+
+
+def test_category_average_price_empty():
+    """Тест расчета средней цены для пустой категории (должен вернуть 0)"""
+    empty_category = Category("Пустая", "Нет товаров")
+    assert empty_category.average_price() == 0.0
+
+
+def test_smartphone_addition():
+    """Тест сложения смартфонов (по общей стоимости)"""
+    phone1 = Smartphone("iPhone", "Простой", 50000, 2, "Высокая", "12", 128, "Черный")
+    phone2 = Smartphone("Samsung", "Сложный", 70000, 3, "Средняя", "S20", 256, "Синий")
+
+    # (50000 * 2) + (70000 * 3) = 310000
+    assert phone1 + phone2 == 310000
+
+
+def test_lawn_grass_addition():
+    """Тест сложения газонной травы (по общей стоимости)"""
+    grass1 = LawnGrass("Трава", "Зеленая", 1000, 10, "Россия", 14, "Зеленый")
+    grass2 = LawnGrass("Трава", "Сухая", 500, 20, "Беларусь", 30, "Желтый")
+
+    # (1000 * 10) + (500 * 20) = 20000
+    assert grass1 + grass2 == 20000
+
+
+def test_invalid_product_addition():
+    """Тест попытки сложения разных классов товаров"""
+    phone = Smartphone("iPhone", "Простой", 50000, 2, "Высокая", "12", 128, "Черный")
+    grass = LawnGrass("Трава", "Зеленая", 1000, 10, "Россия", 14, "Зеленый")
+
+    with pytest.raises(TypeError, match="Можно складывать только объекты класса Product или его наследников"):
+        phone + grass
