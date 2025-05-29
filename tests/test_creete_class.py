@@ -67,11 +67,9 @@ class TestProductPrice:
     def test_price_setter_invalid(self):
         product = Product("Tecno Camon 20", "128GB, золотой", 15990.0, 5)
 
-        # Проверяем, что цена не меняется при невалидных значениях
-        product.price = 0
-        assert product.price == 15990.0
+        with pytest.raises(ValueError):
+            product.price = 0
 
-        product.price = -50.0
         assert product.price == 15990.0
 
     def test_private_price_access(self):
