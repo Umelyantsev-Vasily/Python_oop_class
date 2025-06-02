@@ -9,10 +9,11 @@ class Product(CreationLoggerMixin, BaseProduct):
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
         """Инициализация товара с логированием"""
-        # Вызов __init__ миксина для логирования
         super().__init__(name=name, description=description, price=price, quantity=quantity)
 
-        # Инициализация атрибутов
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
+
         self.name = name
         self.description = description
         self.__price = price
@@ -33,11 +34,15 @@ class Product(CreationLoggerMixin, BaseProduct):
     @classmethod
     def new_product(cls, product_data: Dict[str, object]) -> "Product":
         """Создает новый товар из словаря"""
+        quantity = int(product_data["quantity"])
+        if quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
+
         return cls(
             name=str(product_data["name"]),
             description=str(product_data["description"]),
             price=float(product_data["price"]),
-            quantity=int(product_data["quantity"]),
+            quantity=quantity,
         )
 
     def __str__(self) -> str:
@@ -158,3 +163,14 @@ class Category:
     def __str__(self) -> str:
         """Возвращает строковое представление категории."""
         return f"{self.name}, количество продуктов: {len(self)} шт."
+
+    def average_price(self) -> float:
+        """
+        Рассчитывает среднюю цену товаров в категории.
+        Возвращает 0, если в категории нет товаров.
+        """
+        try:
+            total_price = sum(product.price for product in self.__products)
+            return total_price / len(self.__products)
+        except ZeroDivisionError:
+            return 0.0

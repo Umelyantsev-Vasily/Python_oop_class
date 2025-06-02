@@ -121,7 +121,7 @@ Name                                Stmts   Miss  Cover
 -------------------------------------------------------
 src\__init__.py                         0      0   100%
 src\base_product.py                    15      3    80%
-src\create_class.py                    83     16    81%
+src\create_class.py                    94     20    79%
 src\creationloggermixin.py             15      0   100%
 src\lawngrass_class.py                  9      0   100%
 src\read_json.py                       14      0   100%
@@ -130,12 +130,13 @@ tests\__init__.py                       0      0   100%
 tests\conftest.py                      22      3    86%
 tests\test_baseproduct.py              48      0   100%
 tests\test_creationloggermixin.py      44      0   100%
-tests\test_creete_class.py            106      0   100%
+tests\test_creete_class.py            135      0   100%
 tests\test_lawngrass.py                30      0   100%
 tests\test_read_json.py                32      0   100%
 tests\test_smartphone_class.py         33      0   100%
 -------------------------------------------------------
-TOTAL                                 469     22    95%
+TOTAL                                 509     26    95%
+
 
 
 ```
